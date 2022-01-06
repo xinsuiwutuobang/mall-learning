@@ -48,6 +48,7 @@ public class PmsBrandServiceImpl implements PmsBrandService {
 
     @Override
     public PmsBrand getBrand(Long id) {
+        int i=1/0;
         return brandMapper.selectByPrimaryKey(id);
     }
 }

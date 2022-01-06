@@ -25,10 +25,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     public String scheduleJob(Class<? extends Job> jobBeanClass, String cron, String data) {
         // 创建需要执行的任务
         String jobName = UUID.fastUUID().toString();
-        JobDetail jobDetail = JobBuilder.newJob(jobBeanClass)
-                .withIdentity(jobName, defaultGroup)
-                .usingJobData("data", data)
-                .build();
+        JobDetail jobDetail = JobBuilder.newJob(jobBeanClass).withIdentity(jobName, defaultGroup)
+                .withDescription("description").usingJobData("data", data).build();
         //创建触发器，指定任务执行时间
         CronTrigger cronTrigger = TriggerBuilder.newTrigger()
                 .withIdentity(jobName, defaultGroup)
@@ -39,6 +37,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             scheduler.scheduleJob(jobDetail, cronTrigger);
         } catch (SchedulerException e) {
             e.printStackTrace();
+            /*时间小于当前时间，将会抛出异常SchedulerException: Based on configured schedule, the given trigger 'default_group.d59f4832-297d-4c6c-917e-632f2300b0aa' will never fire*/
             log.info("创建定时任务失败！");
         }
         return jobName;

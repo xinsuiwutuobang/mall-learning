@@ -1,0 +1,43 @@
+docker run -d \
+--name=apm-server -p 8200:8200 \
+--user=apm-server \
+--restart=always \
+--link elasticsearch:elasticsearch \
+--link kibana:kinaba \
+elastic/apm-server:7.6.2  \
+--strict.perms=false -e  \
+-E output.elasticsearch.hosts=["elasticsearch:9200"] \
+
+docker run -d \
+--name=apm-server -p 8200:8200 \
+--user=apm-server \
+--restart=always \
+--link elasticsearch:elasticsearch \
+--link kibana:kinaba \
+--volume="/mydata/apm/apm-server.docker.yml:/usr/share/apm-server/apm-server.yml:ro" \
+elastic/apm-server:7.6.2  \
+--strict.perms=false -e  \
+-E output.elasticsearch.hosts=["elasticsearch:9200"] \
+docker exec -it apm-server /bin/bash
+docker restart apm-server
+
+
+docker run -d \
+-p 8188:8088 \
+--name=apm-pro \
+--link elasticsearch:elasticsearch \
+--link mysql:mysql \
+-e PARAMS="--spring.datasource.url=jdbc:mysql://mysql:3306/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai --server_urls=http://elasticsearch:8200" \
+mall-tiny/mall-tiny-apm:1.0-SNAPSHOT
+
+docker run -d \
+-p 8188:8088 \
+--name=apm-pro \
+--link elasticsearch:elasticsearch \
+--link mysql:mysql \
+--link apm-server:apm-server \
+-e "spring.datasource.url=jdbc:mysql://mysql:3306/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai" \
+-e "elasticapm.server_urls=http://apm-server:8200" \
+mall-tiny/mall-tiny-apm:1.0-SNAPSHOT
+
+wget localhost:8188/brand/listAll

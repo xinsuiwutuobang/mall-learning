@@ -30,7 +30,6 @@ import java.util.Map;
 
 /**
  * 统一日志处理切面
- * Created by macro on 2018/4/26.
  */
 @Aspect
 @Component
@@ -58,6 +57,7 @@ public class WebLogAspect {
         HttpServletRequest request = attributes.getRequest();
         //记录请求信息
         WebLog webLog = new WebLog();
+        //执行controller中请求的方法
         Object result = joinPoint.proceed();
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;

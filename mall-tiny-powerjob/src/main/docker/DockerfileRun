@@ -1,0 +1,8 @@
+# -t 表示指定镜像仓库名称/镜像名称:镜像标签 .表示使用当前目录下的Dockerfile
+docker build -t yangfei/mall-tiny-powerjob-1.0-SNAPSHOT.jar .
+
+#使用docker命令启动：
+docker run -p 8088:8088 --name powerjob-pro \
+-d mall-tiny/mall-tiny-powerjob:1.0-SNAPSHOT
+#进入运行mysql的docker容器
+docker exec -it mysql /bin/bash

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * 发送邮件定时任务执行器
- * Created by macro on 2020/9/27.
  */
 @Slf4j
 @Component

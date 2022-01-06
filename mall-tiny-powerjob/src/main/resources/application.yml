@@ -17,6 +17,6 @@ mybatis:
 powerjob:
   worker:
     akka-port: 27777 # akka 工作端口
-    app-name: mall-tiny-powerjob # 接入应用名称，用于分组隔离
-    server-address: 192.168.3.101:7700 # 调度服务器地址
+    app-name: mall-tiny-powerjob1 # 接入应用名称，用于分组隔离
+    server-address: 10.10.30.43:7700 # 调度服务器地址
     store-strategy: disk # 持久化方式

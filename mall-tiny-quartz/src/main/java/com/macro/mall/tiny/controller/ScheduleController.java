@@ -19,7 +19,6 @@ import java.util.Date;
 
 /**
  * 定时任务调度相关接口
- * Created by macro on 2020/9/29.
  */
 @Api(tags = "ScheduleController", description = "定时任务调度相关接口")
 @RestController
