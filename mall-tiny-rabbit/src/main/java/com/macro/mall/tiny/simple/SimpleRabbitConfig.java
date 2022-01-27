@@ -21,21 +21,36 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
- * Created by macro on 2020/5/19.
+ * 简单模式
+ * 简单模式是最简单的消息模式，它包含一个生产者、一个消费者和一个队列。
+ * 生产者向队列里发送消息，消费者从队列中获取消息并消费
  */
 @Configuration
 public class SimpleRabbitConfig {
 
+	/**
+	 * 必须先声明队列，否则报错
+	 * Failed to declare queue(s):[simple.hello1]
+	 * @return
+	 */
 	@Bean
 	public Queue hello() {
 		return new Queue("simple.hello");
 	}
 
+	/**
+	 * 消息发送者，集成RabbitTemplate
+	 * @return
+	 */
 	@Bean
 	public SimpleSender simpleSender(){
 		return new SimpleSender();
 	}
 
+	/**
+	 * 消息发送者，集成 RabbitListener RabbitHandler
+	 * @return
+	 */
 	@Bean
 	public SimpleReceiver simpleReceiver(){
 		return new SimpleReceiver();

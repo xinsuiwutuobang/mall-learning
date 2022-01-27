@@ -23,7 +23,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.util.StopWatch;
 
 /**
- * Created by macro on 2020/5/19.
+ * 消费者
  */
 @RabbitListener(queues = "work.hello")
 public class WorkReceiver {
@@ -36,6 +36,12 @@ public class WorkReceiver {
         this.instance = i;
     }
 
+    /**
+     * 两个消费者从队列work.hello中获取消息，名称分别为instance 1和instance 2，消息中包含.号越多，耗时越长；
+     *
+     * 生产者往队列中发送包含不同数量.号的消息，instance 1和instance 2消费者互相竞争，分别消费了一部分消息。
+     * @param in
+     */
     @RabbitHandler
     public void receive(String in) {
         StopWatch watch = new StopWatch();

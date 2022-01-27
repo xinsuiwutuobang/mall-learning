@@ -35,7 +35,7 @@ public class Swagger2Config {
         return new ApiInfoBuilder()
                 .title("SwaggerUI演示")
                 .description("mall-tiny")
-                .contact(new Contact("macro", null, null))
+                .contact(new Contact("fy", null, null))
                 .version("1.0")
                 .build();
     }

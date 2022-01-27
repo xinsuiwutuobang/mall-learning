@@ -29,6 +29,10 @@ public class FanoutReceiver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FanoutReceiver.class);
 
+    /**
+     * 监听匿名队列1名称（自动生成，不重复）
+     * @param in
+     */
     @RabbitListener(queues = "#{fanoutQueue1.name}")
     public void receive1(String in) {
         receive(in, 1);
@@ -39,6 +43,15 @@ public class FanoutReceiver {
         receive(in, 2);
     }
 
+    /**
+     * 消费者从绑定的匿名队列中获取消息，消息中包含.号越多，耗时越长，由于该消费者可以从两个队列中获取并消费消息，
+     * 可以看做两个消费者，名称分别为instance 1和instance 2；
+     *
+     * 生产者往队列中发送包含不同数量.号的消息，instance 1和instance 2同时获取并消费了消息。
+     *
+     * @param in
+     * @param receiver
+     */
     private void receive(String in, int receiver) {
         StopWatch watch = new StopWatch();
         watch.start();

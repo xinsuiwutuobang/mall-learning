@@ -34,6 +34,10 @@ public class DirectSender {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DirectSender.class);
 
+	/**
+	 * 生产者通过send方法向交换机exchange.direct中发送消息，发送时使用不同的路由键，根据路由键会被转发到不同的队列；
+	 * @param index
+	 */
 	public void send(int index) {
 		StringBuilder builder = new StringBuilder("Hello to ");
 		int limitIndex = index % 3;

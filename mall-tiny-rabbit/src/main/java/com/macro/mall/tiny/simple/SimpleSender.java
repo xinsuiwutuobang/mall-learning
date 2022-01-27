@@ -30,10 +30,10 @@ public class SimpleSender {
 	@Autowired
 	private RabbitTemplate template;
 
-	private static final String queueName="simple.hello";
+	private static final String queueName="simple.hello1";
 
 	public void send() {
-		String message = "Hello World!";
+		String message = "Hello World";
 		this.template.convertAndSend(queueName, message);
 		LOGGER.info(" [x] Sent '{}'", message);
 	}

@@ -21,13 +21,17 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
 /**
- * Created by macro on 2020/5/19.
+ * 消息接受者
  */
 @RabbitListener(queues = "simple.hello")
 public class SimpleReceiver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleReceiver.class);
 
+    /**
+     * 产者往队列中发送消息，消费者从队列中获取消息并消费
+     * @param in
+     */
     @RabbitHandler
     public void receive(String in) {
         LOGGER.info(" [x] Received '{}'", in);

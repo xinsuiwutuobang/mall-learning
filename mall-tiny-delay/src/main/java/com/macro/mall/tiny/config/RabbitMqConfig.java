@@ -10,7 +10,6 @@ import java.util.Map;
 
 /**
  * 消息队列配置
- * Created by macro on 2018/9/14.
  */
 @Configuration
 public class RabbitMqConfig {
@@ -22,7 +21,7 @@ public class RabbitMqConfig {
     CustomExchange  orderPluginDirect() {
         //创建一个自定义交换机，可以发送延迟消息
         Map<String, Object> args = new HashMap<>();
-        args.put("x-delayed-type", "direct");
+        args.put("x-delayed-type", ExchangeTypes.DIRECT);
         return new CustomExchange(QueueEnum.QUEUE_ORDER_PLUGIN_CANCEL.getExchange(), "x-delayed-message",true, false,args);
     }
 
@@ -31,7 +30,7 @@ public class RabbitMqConfig {
      */
     @Bean
     public Queue orderPluginQueue() {
-        return new Queue(QueueEnum.QUEUE_ORDER_PLUGIN_CANCEL.getName());
+        return new Queue(QueueEnum.QUEUE_ORDER_PLUGIN_CANCEL.getName(),true);
     }
 
     /**

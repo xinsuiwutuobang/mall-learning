@@ -43,7 +43,7 @@ import java.util.Map;
 
 /**
  * 商品搜索管理Service实现类
- * Created by macro on 2018/6/19.
+ *
  */
 @Service
 public class EsProductServiceImpl implements EsProductService {
@@ -54,6 +54,11 @@ public class EsProductServiceImpl implements EsProductService {
     private EsProductRepository productRepository;
     @Autowired
     private ElasticsearchRestTemplate elasticsearchRestTemplate;
+
+    /**
+     * 导入db商品信息到es
+     * @return
+     */
     @Override
     public int importAll() {
         List<EsProduct> esProductList = productDao.getAllEsProductList(null);
@@ -67,11 +72,21 @@ public class EsProductServiceImpl implements EsProductService {
         return result;
     }
 
+    /**
+     * 根据商品id删除es商品
+     * @param id
+     */
     @Override
     public void delete(Long id) {
         productRepository.deleteById(id);
     }
 
+    /**
+     * 创建商品
+     * db增加成功后，向es增加
+     * @param id
+     * @return
+     */
     @Override
     public EsProduct create(Long id) {
         EsProduct result = null;
@@ -83,6 +98,11 @@ public class EsProductServiceImpl implements EsProductService {
         return result;
     }
 
+    /**
+     * 批量删除
+     * es 批量删除
+     * @param ids
+     */
     @Override
     public void delete(List<Long> ids) {
         if (!CollectionUtils.isEmpty(ids)) {
@@ -96,12 +116,31 @@ public class EsProductServiceImpl implements EsProductService {
         }
     }
 
+    /**
+     * es 商品搜索
+     *
+     * @param keyword
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @Override
     public Page<EsProduct> search(String keyword, Integer pageNum, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNum, pageSize);
         return productRepository.findByNameOrSubTitleOrKeywords(keyword, keyword, keyword, pageable);
     }
 
+    /**
+     * es 商品搜索
+     *
+     * @param keyword
+     * @param brandId
+     * @param productCategoryId
+     * @param pageNum
+     * @param pageSize
+     * @param sort
+     * @return
+     */
     @Override
     public Page<EsProduct> search(String keyword, Long brandId, Long productCategoryId, Integer pageNum, Integer pageSize,Integer sort) {
         Pageable pageable = PageRequest.of(pageNum, pageSize);
@@ -160,6 +199,13 @@ public class EsProductServiceImpl implements EsProductService {
         return productRepository.search(searchQuery);
     }
 
+    /**
+     * es 商品推荐
+     * @param id
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @Override
     public Page<EsProduct> recommend(Long id, Integer pageNum, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNum, pageSize);

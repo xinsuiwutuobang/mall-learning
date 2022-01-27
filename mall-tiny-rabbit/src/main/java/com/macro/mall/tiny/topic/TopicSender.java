@@ -36,6 +36,10 @@ public class TopicSender {
 	private final String[] keys = {"quick.orange.rabbit", "lazy.orange.elephant", "quick.orange.fox",
 			"lazy.brown.fox", "lazy.pink.rabbit", "quick.brown.fox"};
 
+	/**
+	 * 生产者通过send方法向交换机exchange.topic中发送消息，消息中包含不同的路由键；
+	 * @param index
+	 */
 	public void send(int index) {
 		StringBuilder builder = new StringBuilder("Hello to ");
 		int limitIndex = index%keys.length;

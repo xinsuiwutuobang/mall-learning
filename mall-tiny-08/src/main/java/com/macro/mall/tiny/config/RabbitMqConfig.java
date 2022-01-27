@@ -5,6 +5,9 @@ import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * 消息队列配置
  * Created by macro on 2018/9/14.
@@ -74,6 +77,14 @@ public class RabbitMqConfig {
                 .bind(orderTtlQueue)
                 .to(orderTtlDirect)
                 .with(QueueEnum.QUEUE_TTL_ORDER_CANCEL.getRouteKey());
+    }
+
+    public static void main(String[] args) {
+        String a="CPC成功率低于90%";
+        String regEx="[^0-9]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(a);
+        System.out.println( m.replaceAll("").trim());
     }
 
 }

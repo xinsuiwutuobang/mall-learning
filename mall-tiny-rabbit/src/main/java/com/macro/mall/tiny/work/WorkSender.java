@@ -21,7 +21,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * Created by macro on 2020/5/19.
+ * 消息发送者
  */
 public class WorkSender {
 
@@ -32,6 +32,10 @@ public class WorkSender {
 
     private static final String queueName = "work.hello";
 
+    /**
+     * 生产者往队列中发送包含不同数量.号的消息，instance 1和instance 2消费者互相竞争，分别消费了一部分消息。
+     * @param index
+     */
     public void send(int index) {
         StringBuilder builder = new StringBuilder("Hello");
         int limitIndex = index % 3+1;

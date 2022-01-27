@@ -12,7 +12,7 @@ spring:
         enabled: true
   elasticsearch:
     rest:
-      uris: http://localhost:9200
+      uris: http://10.10.30.43:9200
 mybatis:
   mapper-locations:
     - classpath:mapper/*.xml

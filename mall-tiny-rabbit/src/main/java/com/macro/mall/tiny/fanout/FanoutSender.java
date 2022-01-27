@@ -30,6 +30,10 @@ public class FanoutSender {
 
     private static final String exchangeName = "exchange.fanout";
 
+    /**
+     * 生产者通过send方法向交换机exchange.fanout中发送消息，消息中包含一定数量的.号；
+     * @param index
+     */
     public void send(int index) {
         StringBuilder builder = new StringBuilder("Hello");
         int limitIndex = index % 3 + 1;

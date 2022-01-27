@@ -46,7 +46,7 @@ public class EasyPoiController {
                                  HttpServletRequest request,
                                  HttpServletResponse response) {
         List<Member> memberList = LocalJsonUtil.getListFromJson("json/members.json", Member.class);
-        ExportParams params = new ExportParams("会员列表", "会员列表", ExcelType.XSSF);
+        ExportParams params = new ExportParams("会员列表1", "会员列表", ExcelType.XSSF);
         //对导出结果进行自定义处理
         MemberExcelDataHandler handler = new MemberExcelDataHandler();
         handler.setNeedHandlerFields(new String[]{"昵称"});
@@ -82,7 +82,7 @@ public class EasyPoiController {
                                 HttpServletRequest request,
                                 HttpServletResponse response) {
         List<Order> orderList = getOrderList();
-        ExportParams params = new ExportParams("订单列表", "订单列表", ExcelType.XSSF);
+        ExportParams params = new ExportParams("订单列表1", "订单列表", ExcelType.XSSF);
         //导出时排除一些字段
         params.setExclusions(new String[]{"ID", "出生日期", "性别"});
         map.put(NormalExcelConstants.DATA_LIST, orderList);
@@ -90,6 +90,24 @@ public class EasyPoiController {
         map.put(NormalExcelConstants.PARAMS, params);
         map.put(NormalExcelConstants.FILE_NAME, "orderList");
         PoiBaseView.render(map, request, response, NormalExcelConstants.EASYPOI_EXCEL_VIEW);
+    }
+
+    @ApiOperation("从Excel导入订单列表1")
+    @RequestMapping(value = "/importOrderList", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult importOrderList(@RequestPart("file") MultipartFile file) {
+        ImportParams params = new ImportParams();
+        params.setTitleRows(1);
+        params.setHeadRows(2);
+        try {
+            List<Order> list = ExcelImportUtil.importExcel(
+                    file.getInputStream(),
+                    Order.class, params);
+            return CommonResult.success(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return CommonResult.failed("导入失败！");
+        }
     }
 
     private List<Order> getOrderList() {

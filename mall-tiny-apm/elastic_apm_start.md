@@ -15,6 +15,11 @@ docker run -d --name=apm -p 8088:8088
 
 -e 'spring.profiles.active'=${profile_active} \
 ````
+````
+启动类上增加代码：
+ElasticApmAttacher.attach();
+使用jdk11 运行 
+````
 
 学习不走弯路，[关注公众号](#公众号) 回复「学习路线」，获取mall项目专属学习路线！
 

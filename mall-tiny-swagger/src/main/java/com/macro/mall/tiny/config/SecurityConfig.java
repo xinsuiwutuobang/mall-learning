@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, // 允许对于网站静态资源的无授权访问
                         "/",
+                        /*这里最后的/，如果请求路径上没有该字符则无法访问*/
                         "/swagger-ui/",
                         "/*.html",
                         "/favicon.ico",
@@ -58,7 +59,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v2/api-docs/**"
                 )
                 .permitAll()
-                .antMatchers("/admin/login")// 对登录注册要允许匿名访问
+                .antMatchers(HttpMethod.POST,"/admin/login")// 对登录注册要允许匿名访问
+                //如果不知道httpMethod，会走认证流程，导致缺少token导致无法登录
+                //.antMatchers("/admin/login")// 对登录注册要允许匿名访问
                 .permitAll()
                 .antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求
                 .permitAll()
